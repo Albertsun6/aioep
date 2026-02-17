@@ -1,0 +1,22 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Cursor (project-specific, not platform-level)
+# .cursor/ is intentionally NOT ignored — skills/ and rules/ are tracked
+
+# Node (for future CLI tool)
+node_modules/
+dist/
+*.log
+
+# Python (for future tooling)
+__pycache__/
+*.pyc
+.venv/
