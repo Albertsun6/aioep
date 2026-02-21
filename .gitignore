@@ -20,3 +20,12 @@ dist/
 __pycache__/
 *.pyc
 .venv/
+.env.local
+
+# Web app
+web/node_modules/
+web/.next/
+web/.env.local
+web/*.png
+web/*.js
+!web/scripts/

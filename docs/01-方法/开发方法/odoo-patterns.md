@@ -1,6 +1,6 @@
 # Odoo 设计模式
 
-> 状态: **已确认** | 版本: v0.2.0 | 创建: 2026-02-15 | 更新: 2026-02-15
+> 状态: **已验证** | 版本: v0.3.0 | 创建: 2026-02-15 | 更新: 2026-02-17
 
 ## 定位
 
@@ -156,6 +156,12 @@ _sql_constraints = [
 ]
 ```
 
+> **`@api.constrains` 触发陷阱**（试跑发现的 P2 Bug）：
+> - `@api.constrains('field_a', 'field_b')` **只有**在 `create/write` 的 vals 中**显式包含**列出的字段时才触发
+> - 例如：`@api.constrains('approver_group_id', 'approver_user_id')` 在 create 时如果两个字段都没传，约束**不会触发**
+> - **解决方案**：把一个必传字段（如 `name`）加入装饰器 `@api.constrains('name', 'approver_group_id', 'approver_user_id')`，确保 create 时至少有一个字段被传递
+> - SQL 约束没有此问题，能覆盖所有路径——优先使用 SQL 约束
+
 ### 1.8 Sequence 模式
 
 **何时用**：自动生成业务单据编号。
@@ -296,6 +302,19 @@ def _notify_approver(self, level):
     )
 ```
 
+> **`_approval_allowed` 覆盖模式**（试跑发现的 P1 Bug）：
+> - Odoo 标准 `purchase.order` 的 `button_confirm` 调用 `_approval_allowed()` 判断是否可以直接确认（跳过审批）
+> - 如果当前用户是 `purchase_manager`，标准逻辑会返回 `True`，导致自定义多级审批被绕过
+> - **必须 override**：自定义审批模块中覆盖 `_approval_allowed`，当自定义审批行存在且未全部通过时返回 `False`
+>
+> ```python
+> def _approval_allowed(self):
+>     self.ensure_one()
+>     if self.approval_line_ids and self.approval_status != 'approved':
+>         return False
+>     return super()._approval_allowed()
+> ```
+
 ### 3.3 Cron 模式
 
 ```xml
@@ -323,7 +342,26 @@ access_purchase_request_manager,erp.purchase.request.manager,model_erp_purchase_
 
 **规则**：每个新模型必须有至少一条访问权限记录，否则无人能访问。
 
-### 4.2 记录规则（ir.rule）
+### 4.2 安全组继承（implied_ids）
+
+> v0.3.0 新增。基于试跑中 RBAC 测试发现的问题。
+
+**何时用**：定义安全组的层级关系（高级组自动包含低级组权限）。
+
+```xml
+<record id="group_purchase_approval_gm" model="res.groups">
+    <field name="name">总经理审批</field>
+    <field name="implied_ids" eval="[(4, ref('group_purchase_approval_dept'))]"/>
+</record>
+```
+
+**注意事项**：
+- `implied_ids` 是**自动继承**：GM 组的用户自动获得 Dept Manager 组的所有权限
+- 这意味着 GM 可以执行 Dept Manager 级别的审批操作——**这不是 Bug，是设计如此**
+- 设计 RBAC 时**必须画出组继承关系图**，否则测试会出现意外的权限边界
+- 如果确实需要"只有 A 组权限、不含 B 组"，不要使用 `implied_ids`，改用独立的组定义
+
+### 4.3 记录规则（ir.rule）
 
 ```xml
 <!-- 销售员只能看自己的订单 -->
@@ -397,3 +435,4 @@ access_purchase_request_manager,erp.purchase.request.manager,model_erp_purchase_
 |------|------|---------|
 | v0.1.0 | 2026-02-15 | 占位创建 |
 | v0.2.0 | 2026-02-15 | 填充全部模式：模型层8个 + 视图层2个 + 业务层3个 + 安全层2个 + 反模式 + 组合指南 |
+| v0.3.0 | 2026-02-17 | 基于 Phase 2~3 试跑反馈：新增 `@api.constrains` 触发陷阱、`_approval_allowed` 覆盖模式、安全组 `implied_ids` 继承说明 |

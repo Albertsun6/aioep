@@ -1,6 +1,6 @@
 # BPMN 2.0
 
-> 状态: **纲要** | 版本: v0.2.0 | 创建: 2026-02-15 | 更新: 2026-02-15
+> 状态: **已细化** | 版本: v0.3.0 | 创建: 2026-02-15 | 更新: 2026-02-18
 
 ## 定位
 
@@ -141,11 +141,25 @@ flowchart LR
 
 ---
 
+## BPMN → Odoo 映射关系（实战经验）
+
+| BPMN 元素 | Odoo 实现方式 | 示例 |
+|-----------|-------------|------|
+| 用户任务 (User Task) | `action_` 方法 + 按钮 | `action_submit_approval()` |
+| 排他网关 (Exclusive Gateway) | `if/else` 条件或 Selection 状态机 | 金额阈值判断走部门经理/总经理审批 |
+| 泳道 (Pool/Lane) | Odoo 安全组 (`res.groups`) | 采购员 / 采购经理 / 总经理 |
+| 消息事件 (Message Event) | `mail.thread` + `message_post` | 审批通过后通知申请人 |
+| 定时事件 (Timer Event) | `ir.cron` 定时任务 | 每月自动触发供应商评分计算 |
+| 子流程 (Sub-process) | 独立方法或独立模型 | 收货子流程 = `stock.picking` 操作 |
+
+**1 人 + AI 模式建议**：
+- Phase 1 用 Mermaid 出初稿（AI 生成速度快，修改成本低）
+- 确需正式交付时再转 draw.io BPMN 2.0
+- 开发阶段直接从 Mermaid 图映射到 Odoo 代码，跳过 draw.io 中间步骤
+
 ## 待填充内容
 
-- [ ] 实际的 BPMN 流程图（Phase 1 执行时在 draw.io 中创建）
 - [ ] L2/L3 元素的详细使用指南（按需补充）
-- [ ] BPMN 与 Odoo 工作流的映射关系
 - [ ] draw.io BPMN 操作技巧
 
 ## 与其他文档的关系
@@ -163,3 +177,4 @@ flowchart LR
 |------|------|---------|
 | v0.1.0 | 2026-02-15 | 占位创建 |
 | v0.2.0 | 2026-02-15 | 填充 L1/L2/L3 元素清单、draw.io 规范、流程清单、采购示例 |
+| v0.3.0 | 2026-02-18 | 新增 BPMN→Odoo 映射表、1 人 + AI 模式建议 |
