@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useProject } from "@/lib/project-context";
-import { Spin } from "antd";
+import { Loader2 } from "lucide-react";
 
 export default function SDLCRedirect() {
   const router = useRouter();
@@ -14,5 +14,5 @@ export default function SDLCRedirect() {
       router.replace("/projects");
     }
   }, [currentProject, router]);
-  return <Spin size="large" style={{ display: "block", margin: "80px auto" }} />;
+  return <div className="flex h-[80vh] w-full items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>;
 }

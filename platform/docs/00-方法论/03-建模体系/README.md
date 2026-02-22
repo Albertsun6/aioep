@@ -37,6 +37,7 @@ Layer 5  Mermaid      "快速参考"             Markdown 内嵌
 | 语言 | 文档 | 状态 | 核心用途 |
 |------|------|------|---------|
 | ArchiMate | [archimate.md](./archimate.md) | 纲要 | 企业架构三层建模 |
+| ArchiMate Motivation | [archimate-motivation.md](./archimate-motivation.md) | **已确认** | 战略动机层建模（战略管理核心） |
 | BPMN 2.0 | [bpmn.md](./bpmn.md) | 纲要 | 业务流程建模 |
 | C4 Model | 本文档矩阵章节 | 已概述（内容增多时拆分） | 软件架构可视化 |
 | UML 2.5 | 本文档矩阵章节 | 已概述（内容增多时拆分） | 系统设计建模 |
@@ -50,6 +51,7 @@ Layer 5  Mermaid      "快速参考"             Markdown 内嵌
 
 | 建模对象 | 建模语言 | 正式工具（GUI） | 轻量工具（文本） | 适用阶段 |
 |---------|---------|-------------|-------------|---------|
+| **战略动机模型** | **ArchiMate Motivation** | **Archi / AI 辅助** | **Mermaid + JSON** | **Phase 0~1** |
 | 企业架构全景 | ArchiMate | Archi | - | Phase 1 |
 | 业务流程 | BPMN 2.0 | draw.io | Mermaid flowchart | Phase 1 |
 | 业务规则 | 决策表 + 伪代码 | - | Markdown 表格 + 代码块 | Phase 1~2 |
@@ -102,6 +104,8 @@ Step 1: 人类描述需求
 
 Step 2: AI 生成 Mermaid 草稿
   AI 输出 Mermaid 状态机图 / 流程图 / 类图
+  *** 战略场景：AI 从自然语言中提取 ArchiMate Motivation 元素，
+      生成结构化 JSON 草稿（Stakeholder→Driver→Goal→WorkPackage）***
 
 Step 3: 人类审阅草稿
   ├── 确认逻辑正确性

@@ -83,6 +83,34 @@ export interface Project {
   currentPhase: string;
   status: string;
   createdAt: string;
+  strategyId?: string;
+  strategyName?: string;
+}
+
+// === Strategy Types ===
+
+export interface StrategicObjective {
+  id: string;
+  name: string;
+  description: string;
+  year: number;
+  progress: number;
+}
+
+export interface KeyResult {
+  id: string;
+  objectiveId: string;
+  name: string;
+  target: string;
+  current: string;
+}
+
+export interface StrategicInitiative {
+  id: string;
+  name: string;
+  description: string;
+  objectiveId: string;
+  status: "planning" | "active" | "completed" | "on-hold";
 }
 
 // === AI Chat Types ===

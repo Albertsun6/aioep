@@ -23,9 +23,12 @@ __pycache__/
 .env.local
 
 # Web app
+.next/
 web/node_modules/
 web/.next/
 web/.env.local
 web/*.png
 web/*.js
 !web/scripts/
+platform/web/.next/
+platform/web/.env.local

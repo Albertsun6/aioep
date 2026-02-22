@@ -3,30 +3,21 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import {
-    Card,
-    Col,
-    Descriptions,
-    Flex,
-    Progress,
-    Row,
-    Space,
-    Spin,
-    Statistic,
-    Tag,
-    Typography,
-    Button,
-} from "antd";
-import {
-    AppstoreOutlined,
-    CheckCircleOutlined,
-    ClockCircleOutlined,
-    TableOutlined,
-    WarningOutlined,
-} from "@ant-design/icons";
+    CheckCircle,
+    Clock,
+    LayoutGrid,
+    TableProperties,
+    AlertTriangle,
+    ArrowRight
+} from "lucide-react";
 import type { SDLCState, GapFitData } from "@/lib/types";
 import { useProject } from "@/lib/project-context";
-
-const { Title, Paragraph, Text } = Typography;
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function ProjectOverviewPage() {
     const { id } = useParams<{ id: string }>();
@@ -36,7 +27,6 @@ export default function ProjectOverviewPage() {
     const [sdlc, setSdlc] = useState<SDLCState | null>(null);
     const [gapfit, setGapfit] = useState<GapFitData | null>(null);
 
-    // Switch active project context when navigating directly
     useEffect(() => {
         if (id) setCurrentProjectId(id);
     }, [id, setCurrentProjectId]);
@@ -48,7 +38,11 @@ export default function ProjectOverviewPage() {
     }, [id]);
 
     if (!project || !sdlc || !gapfit) {
-        return <Spin size="large" style={{ display: "block", margin: "80px auto" }} />;
+        return (
+            <div className="flex h-[80vh] w-full items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            </div>
+        );
     }
 
     const completedPhases = sdlc.phases.filter((p) => p.status === "completed").length;
@@ -63,95 +57,145 @@ export default function ProjectOverviewPage() {
     );
 
     return (
-        <Flex vertical gap={16} style={{ width: "100%" }}>
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 pt-2">
             <div>
-                <Title level={3} style={{ marginBottom: 4 }}>
-                    {project.name}
-                </Title>
-                <Paragraph type="secondary" style={{ marginBottom: 0 }}>
-                    {project.description}
-                </Paragraph>
+                <h2 className="text-2xl font-bold tracking-tight mb-1">{project.name}</h2>
+                <p className="text-sm text-muted-foreground">{project.description}</p>
             </div>
 
             {/* Meta info */}
-            <Card size="small">
-                <Descriptions size="small" column={3}>
-                    <Descriptions.Item label="技术栈">{project.techStack || "—"}</Descriptions.Item>
-                    <Descriptions.Item label="当前阶段">{project.currentPhase || "—"}</Descriptions.Item>
-                    <Descriptions.Item label="状态">
-                        <Tag color="blue">{project.status || "—"}</Tag>
-                    </Descriptions.Item>
-                    <Descriptions.Item label="创建日期">{project.createdAt}</Descriptions.Item>
-                </Descriptions>
+            <Card className="bg-muted/30">
+                <CardContent className="p-4">
+                    <dl className="grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
+                        <div className="flex flex-col gap-1">
+                            <dt className="text-muted-foreground">技术栈</dt>
+                            <dd className="font-medium">{project.techStack || "—"}</dd>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <dt className="text-muted-foreground">当前阶段</dt>
+                            <dd className="font-medium">{project.currentPhase || "—"}</dd>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <dt className="text-muted-foreground">状态</dt>
+                            <dd>
+                                <Badge variant="secondary" className="bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400">
+                                    {project.status || "—"}
+                                </Badge>
+                            </dd>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <dt className="text-muted-foreground">创建日期</dt>
+                            <dd className="font-medium">{project.createdAt}</dd>
+                        </div>
+                    </dl>
+                </CardContent>
             </Card>
 
             {/* Stats */}
-            <Row gutter={[12, 12]}>
-                <Col xs={12} xl={6}>
-                    <Card size="small">
-                        <Statistic title="已完成阶段" value={completedPhases} suffix="/ 4"
-                            prefix={<CheckCircleOutlined style={{ color: "#22c55e" }} />} />
-                    </Card>
-                </Col>
-                <Col xs={12} xl={6}>
-                    <Card size="small">
-                        <Statistic title="Sprint 进度" value={completedSprints} suffix={`/ ${sdlc.sprints.length}`}
-                            prefix={<ClockCircleOutlined style={{ color: "#2563eb" }} />} />
-                    </Card>
-                </Col>
-                <Col xs={12} xl={6}>
-                    <Card size="small">
-                        <Statistic title="需求总数" value={gapfit.requirements.length} suffix="项"
-                            prefix={<TableOutlined style={{ color: "#f59e0b" }} />} />
-                    </Card>
-                </Col>
-                <Col xs={12} xl={6}>
-                    <Card size="small">
-                        <Statistic title="待处理 Gap/Partial" value={gapItems} suffix="项"
-                            prefix={<WarningOutlined style={{ color: "#ef4444" }} />} />
-                    </Card>
-                </Col>
-            </Row>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">已完成阶段</CardTitle>
+                        <CheckCircle className="h-4 w-4 text-emerald-500" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold">
+                            {completedPhases} <span className="text-base font-normal text-muted-foreground">/ 4</span>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">Sprint 进度</CardTitle>
+                        <Clock className="h-4 w-4 text-blue-500" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold">
+                            {completedSprints} <span className="text-base font-normal text-muted-foreground">/ {sdlc.sprints.length}</span>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">需求总数</CardTitle>
+                        <TableProperties className="h-4 w-4 text-amber-500" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold">
+                            {gapfit.requirements.length} <span className="text-base font-normal text-muted-foreground">项</span>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">待处理 Gap/Partial</CardTitle>
+                        <AlertTriangle className="h-4 w-4 text-rose-500" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold">
+                            {gapItems} <span className="text-base font-normal text-muted-foreground">项</span>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
 
             {/* SDLC progress summary */}
-            <Card
-                title="SDLC 阶段进度"
-                extra={<Button icon={<AppstoreOutlined />} size="small"
-                    onClick={() => router.push(`/projects/${id}/sdlc`)}>打开 SDLC 看板</Button>}
-            >
-                <Flex vertical gap={10}>
-                    {sdlc.phases.map((phase) => (
-                        <div key={phase.id}>
-                            <Space>
-                                <Text strong>{phase.name}</Text>
-                                <Text type="secondary">{phase.subtitle}</Text>
-                                <Tag color={phase.status === "completed" ? "green" : phase.status === "in-progress" ? "blue" : "default"}>
-                                    {phase.status === "completed" ? "已完成" : phase.status === "in-progress" ? "进行中" : "待开始"}
-                                </Tag>
-                            </Space>
-                            <Progress
-                                percent={phase.progress}
-                                size="small"
-                                status={phase.status === "completed" ? "success" : phase.status === "in-progress" ? "active" : "normal"}
-                                style={{ marginTop: 4 }}
-                            />
-                        </div>
-                    ))}
-                </Flex>
-                <Text type="secondary" style={{ fontSize: 12, marginTop: 8, display: "block" }}>
-                    门禁通过：{passedGates} / {totalGates}
-                </Text>
+            <Card>
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <div>
+                        <CardTitle className="text-base">SDLC 阶段进度</CardTitle>
+                    </div>
+                    <Button variant="outline" size="sm" onClick={() => router.push(`/projects/${id}/sdlc`)}>
+                        <LayoutGrid className="mr-2 h-4 w-4" />
+                        打开 SDLC 看板
+                    </Button>
+                </CardHeader>
+                <CardContent className="pt-4">
+                    <div className="flex flex-col gap-6">
+                        {sdlc.phases.map((phase) => (
+                            <div key={phase.id} className="flex flex-col gap-2">
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <span className="font-semibold text-sm">{phase.name}</span>
+                                    <span className="text-xs text-muted-foreground">{phase.subtitle}</span>
+                                    <Badge
+                                        variant={phase.status === "completed" ? "default" : phase.status === "in-progress" ? "secondary" : "outline"}
+                                        className={cn(
+                                            phase.status === "completed" && "bg-emerald-500 hover:bg-emerald-600",
+                                            phase.status === "in-progress" && "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400"
+                                        )}
+                                    >
+                                        {phase.status === "completed" ? "已完成" : phase.status === "in-progress" ? "进行中" : "待开始"}
+                                    </Badge>
+                                </div>
+                                <Progress
+                                    value={phase.progress}
+                                    className="h-2"
+                                    indicatorColor={
+                                        phase.status === "completed" ? "bg-emerald-500" : phase.status === "in-progress" ? "bg-blue-600" : "bg-primary"
+                                    }
+                                />
+                            </div>
+                        ))}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-6 border-t pt-4">
+                        门禁通过：{passedGates} / {totalGates}
+                    </p>
+                </CardContent>
             </Card>
 
             {/* Quick actions */}
-            <Space>
-                <Button type="primary" onClick={() => router.push(`/projects/${id}/sdlc`)}>
+            <div className="flex gap-4">
+                <Button onClick={() => router.push(`/projects/${id}/sdlc`)}>
                     SDLC 看板
                 </Button>
-                <Button onClick={() => router.push(`/projects/${id}/gap-fit`)}>
+                <Button variant="secondary" onClick={() => router.push(`/projects/${id}/gap-fit`)}>
                     Gap-Fit 工作台
+                    <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-            </Space>
-        </Flex>
+            </div>
+        </div>
     );
 }

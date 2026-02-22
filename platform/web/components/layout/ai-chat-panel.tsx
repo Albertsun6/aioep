@@ -1,24 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import {
-  Avatar,
-  Button,
-  Drawer,
-  Empty,
-  Flex,
-  Input,
-  Select,
-  Space,
-  Spin,
-  Typography,
-} from "antd";
-import {
-  RobotOutlined,
-  SendOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { Bot, SendIcon, User, Loader2 } from "lucide-react";
 import type { AIProvider } from "@/lib/types";
+
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Message {
   id: string;
@@ -31,8 +33,6 @@ const quickActions = [
   "建议下一个 Sprint 的任务规划",
   "总结当前 SDLC 进度和风险",
 ];
-
-const { Text } = Typography;
 
 export default function AIChatPanel({
   open,
@@ -103,114 +103,104 @@ export default function AIChatPanel({
   }
 
   return (
-    <Drawer
-      title="AI 助手"
-      placement="right"
-      size="default"
-      open={open}
-      onClose={onClose}
-      destroyOnClose={false}
-      extra={
-        <Select
-          value={provider}
-          onChange={(value) => setProvider(value)}
-          options={[
-            { value: "openai", label: "OpenAI" },
-            { value: "anthropic", label: "Claude" },
-          ]}
-          style={{ width: 120 }}
-          size="small"
-        />
-      }
-      styles={{ body: { padding: 12 } }}
-    >
-      <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-        <div style={{ flex: 1, overflow: "auto", paddingInline: 4 }}>
+    <Sheet open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
+      <SheetContent className="flex flex-col w-[400px] sm:w-[500px] p-0 pr-0">
+        <SheetHeader className="px-6 py-4 border-b flex flex-row items-center justify-between space-y-0">
+          <SheetTitle>AI 助手</SheetTitle>
+          <div className="flex items-center">
+            <Select value={provider} onValueChange={(val) => setProvider(val as AIProvider)}>
+              <SelectTrigger className="w-[120px] h-8 text-xs mr-6">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="openai">OpenAI</SelectItem>
+                <SelectItem value="anthropic">Claude</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </SheetHeader>
+
+        <ScrollArea className="flex-1 p-6">
           {messages.length === 0 ? (
-            <Flex
-              vertical
-              gap={12}
-              style={{ width: "100%", marginTop: 24 }}
-            >
-              <Empty
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                description="我是 AIOEP 智能助手，可协助分析 SDLC 与 Gap-Fit。"
-              />
-              {quickActions.map((action) => (
-                <Button
-                  key={action}
-                  block
-                  onClick={() => handleSubmit(action)}
-                  style={{ textAlign: "left", height: "auto", whiteSpace: "normal" }}
-                >
-                  {action}
-                </Button>
-              ))}
-            </Flex>
-          ) : (
-            <Flex vertical gap={10}>
-              {messages.map((msg) => (
-                <Flex
-                  key={msg.id}
-                  justify={msg.role === "user" ? "flex-end" : "flex-start"}
-                  gap={8}
-                >
-                  {msg.role === "assistant" && (
-                    <Avatar
-                      size="small"
-                      icon={<RobotOutlined />}
-                      style={{ background: "#2563eb", flexShrink: 0 }}
-                    />
-                  )}
-                  <div
-                    style={{
-                      maxWidth: "82%",
-                      padding: "8px 10px",
-                      borderRadius: 8,
-                      background: msg.role === "user" ? "#2563eb" : "var(--secondary)",
-                      color: msg.role === "user" ? "#fff" : "inherit",
-                      whiteSpace: "pre-wrap",
-                      lineHeight: 1.5,
-                      fontSize: 13,
-                    }}
+            <div className="flex flex-col items-center justify-center mt-12 gap-6 text-center">
+              <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                <Bot className="h-12 w-12 opacity-20" />
+                <p>我是 AIOEP 智能助手，可协助分析 SDLC 与 Gap-Fit。</p>
+              </div>
+              <div className="flex flex-col gap-2 w-full mt-4">
+                {quickActions.map((action) => (
+                  <Button
+                    key={action}
+                    variant="outline"
+                    className="justify-start h-auto py-3 text-left font-normal"
+                    onClick={() => handleSubmit(action)}
                   >
-                    {msg.content}
+                    {action}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4 pb-4">
+              {messages.map((msg) => (
+                <div
+                  key={msg.id}
+                  className={`flex gap-3 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
+                >
+                  <Avatar className="h-8 w-8 shrink-0">
+                    <AvatarFallback className={msg.role === "user" ? "bg-primary text-primary-foreground" : "bg-blue-600 text-white"}>
+                      {msg.role === "user" ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div
+                    className={`rounded-lg px-4 py-3 max-w-[80%] text-sm ${msg.role === "user"
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted"
+                      }`}
+                  >
+                    <p className="whitespace-pre-wrap leading-relaxed">
+                      {msg.content}
+                    </p>
                   </div>
-                  {msg.role === "user" && (
-                    <Avatar size="small" icon={<UserOutlined />} style={{ flexShrink: 0 }} />
-                  )}
-                </Flex>
+                </div>
               ))}
-            </Flex>
+              {loading && (
+                <div className="flex items-center gap-2 text-muted-foreground text-sm pl-11">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <span>思考中...</span>
+                </div>
+              )}
+              <div ref={messagesEndRef} className="h-1" />
+            </div>
           )}
+        </ScrollArea>
 
-          {loading && (
-            <Space size={8} style={{ marginTop: 8 }}>
-              <Spin size="small" />
-              <Text type="secondary">思考中...</Text>
-            </Space>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
-
-        <div style={{ marginTop: 12 }}>
-          <Space.Compact style={{ width: "100%" }}>
+        <div className="p-4 border-t bg-background">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            className="flex items-center gap-2"
+          >
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="输入问题..."
-              onPressEnter={() => handleSubmit()}
               disabled={loading}
+              className="flex-1"
             />
             <Button
-              type="primary"
-              icon={<SendOutlined />}
-              onClick={() => handleSubmit()}
+              type="submit"
+              size="icon"
               disabled={loading || !input.trim()}
-            />
-          </Space.Compact>
+              className="shrink-0"
+            >
+              <SendIcon className="h-4 w-4" />
+            </Button>
+          </form>
         </div>
-      </div>
-    </Drawer>
+      </SheetContent>
+    </Sheet>
   );
 }

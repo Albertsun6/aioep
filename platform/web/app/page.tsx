@@ -3,131 +3,122 @@
 import { useRouter } from "next/navigation";
 import { useProject } from "@/lib/project-context";
 import {
-  Button,
-  Card,
-  Col,
-  Flex,
-  Row,
-  Space,
-  Tag,
-  Typography,
-} from "antd";
-import {
-  BookOutlined,
-  FolderOpenOutlined,
-  PlusOutlined,
-  RightOutlined,
-  ThunderboltOutlined,
-} from "@ant-design/icons";
-
-const { Title, Paragraph, Text } = Typography;
+  Book,
+  FolderOpen,
+  Plus,
+  ChevronRight,
+  Zap,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import { Rocket } from "lucide-react";
 
 export default function HomePage() {
   const router = useRouter();
   const { projects, currentProject } = useProject();
 
   return (
-    <Flex vertical gap={24} style={{ width: "100%", maxWidth: 960, margin: "0 auto" }}>
+    <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 pt-6">
       {/* Hero */}
-      <div style={{ paddingTop: 24 }}>
-        <Title level={2} style={{ marginBottom: 6 }}>
-          AIOEP
-        </Title>
-        <Paragraph type="secondary" style={{ fontSize: 15, marginBottom: 0 }}>
+      <div>
+        <h2 className="text-2xl font-bold tracking-tight mb-2">AIOEP</h2>
+        <p className="text-muted-foreground">
           AI 组织效能平台 — 基于 AI-EADM 方法论，以结构化、可追溯、AI 协同的方式开发企业应用系统
-        </Paragraph>
+        </p>
       </div>
 
       {/* Quick nav cards */}
-      <Row gutter={[16, 16]}>
-        <Col xs={24} md={8}>
-          <Card
-            hoverable
-            onClick={() => router.push("/platform/methodology")}
-            style={{ height: "100%" }}
-          >
-            <Space direction="vertical" size={8}>
-              <BookOutlined style={{ fontSize: 24, color: "#2563eb" }} />
-              <Text strong style={{ fontSize: 15 }}>方法论</Text>
-              <Text type="secondary" style={{ fontSize: 13 }}>
-                AI-EADM 9 域方法论体系：核心原则、过程方法论、建模体系、质量框架等
-              </Text>
-            </Space>
-          </Card>
-        </Col>
-        <Col xs={24} md={8}>
-          <Card
-            hoverable
-            onClick={() => router.push("/platform/methods")}
-            style={{ height: "100%" }}
-          >
-            <Space direction="vertical" size={8}>
-              <ThunderboltOutlined style={{ fontSize: 24, color: "#0891b2" }} />
-              <Text strong style={{ fontSize: 15 }}>方法库</Text>
-              <Text type="secondary" style={{ fontSize: 13 }}>
-                分析方法、开发方法、交付方法及其模板
-              </Text>
-            </Space>
-          </Card>
-        </Col>
-        <Col xs={24} md={8}>
-          <Card
-            hoverable
-            onClick={() => router.push("/platform/assets")}
-            style={{ height: "100%" }}
-          >
-            <Space direction="vertical" size={8}>
-              <FolderOpenOutlined style={{ fontSize: 24, color: "#7c3aed" }} />
-              <Text strong style={{ fontSize: 15 }}>Workflows & Rules</Text>
-              <Text type="secondary" style={{ fontSize: 13 }}>
-                Antigravity Workflows 和 Rules 文件管理
-              </Text>
-            </Space>
-          </Card>
-        </Col>
-      </Row>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <Card
+          className="cursor-pointer transition-colors hover:bg-muted/50"
+          onClick={() => router.push("/platform/methodology")}
+        >
+          <CardContent className="flex flex-col gap-2 p-6">
+            <Book className="h-6 w-6 text-blue-600" />
+            <h3 className="font-semibold text-lg">方法论</h3>
+            <p className="text-sm text-muted-foreground">
+              AI-EADM 9 域方法论体系：核心原则、过程方法论、建模体系、质量框架等
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card
+          className="cursor-pointer transition-colors hover:bg-muted/50"
+          onClick={() => router.push("/platform/methods")}
+        >
+          <CardContent className="flex flex-col gap-2 p-6">
+            <Zap className="h-6 w-6 text-cyan-600" />
+            <h3 className="font-semibold text-lg">方法库</h3>
+            <p className="text-sm text-muted-foreground">
+              分析方法、开发方法、交付方法及其模板
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card
+          className="cursor-pointer transition-colors hover:bg-muted/50"
+          onClick={() => router.push("/platform/assets")}
+        >
+          <CardContent className="flex flex-col gap-2 p-6">
+            <FolderOpen className="h-6 w-6 text-purple-600" />
+            <h3 className="font-semibold text-lg">Workflows & Rules</h3>
+            <p className="text-sm text-muted-foreground">
+              Antigravity Workflows 和 Rules 文件管理
+            </p>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Projects */}
-      <div>
-        <Flex justify="space-between" align="center" style={{ marginBottom: 12 }}>
-          <Title level={4} style={{ marginBottom: 0 }}>项目</Title>
-          <Button
-            size="small"
-            icon={<PlusOutlined />}
-            onClick={() => router.push("/projects")}
-          >
+      <div className="mt-4">
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="text-xl font-semibold tracking-tight">项目</h3>
+          <Button size="sm" onClick={() => router.push("/projects")}>
+            <Plus className="mr-2 h-4 w-4" />
             管理项目
           </Button>
-        </Flex>
-        <Row gutter={[12, 12]}>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {projects.map((p) => (
-            <Col xs={24} md={12} key={p.id}>
-              <Card
-                hoverable
-                onClick={() => router.push(`/projects/${p.id}`)}
-                style={{
-                  borderColor: currentProject?.id === p.id ? "#2563eb" : undefined,
-                }}
-              >
-                <Flex justify="space-between" align="center">
-                  <Space direction="vertical" size={4}>
-                    <Space>
-                      <Text strong>{p.name}</Text>
-                      {currentProject?.id === p.id && <Tag color="blue">当前</Tag>}
-                    </Space>
-                    <Text type="secondary" style={{ fontSize: 13 }}>{p.description}</Text>
-                    <Space size={6}>
-                      {p.techStack && <Tag>{p.techStack}</Tag>}
-                      {p.status && <Tag color="green">{p.status}</Tag>}
-                    </Space>
-                  </Space>
-                  <RightOutlined style={{ color: "var(--muted-foreground)" }} />
-                </Flex>
-              </Card>
-            </Col>
+            <Card
+              key={p.id}
+              className={cn(
+                "cursor-pointer transition-colors hover:bg-muted/50",
+                currentProject?.id === p.id && "border-blue-500 bg-blue-50/50 dark:bg-blue-950/20"
+              )}
+              onClick={() => router.push(`/projects/${p.id}`)}
+            >
+              <CardContent className="flex items-center justify-between p-5">
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">{p.name}</span>
+                    {currentProject?.id === p.id && (
+                      <Badge variant="secondary" className="bg-blue-100 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/40 dark:text-blue-400">
+                        当前
+                      </Badge>
+                    )}
+                  </div>
+                  {p.strategyName && (
+                    <div className="flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400">
+                      <Rocket className="h-3 w-3" />
+                      {p.strategyName}
+                    </div>
+                  )}
+                  <p className="text-sm text-muted-foreground line-clamp-1">{p.description}</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    {p.techStack && <Badge variant="outline">{p.techStack}</Badge>}
+                    {p.status && <Badge variant="default" className="bg-emerald-500 hover:bg-emerald-600">{p.status}</Badge>}
+                  </div>
+                </div>
+                <ChevronRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
           ))}
-        </Row>
+        </div>
       </div>
-    </Flex>
+    </div>
   );
 }

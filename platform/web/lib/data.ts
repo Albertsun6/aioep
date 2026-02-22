@@ -278,3 +278,61 @@ async function getDefaultProjectId(): Promise<string> {
   const projects = await getProjects();
   return projects[0]?.id || "erp-v1";
 }
+
+// ═══════════════════════════════════════
+// Strategy
+// ═══════════════════════════════════════
+
+import type { StrategicObjective, KeyResult, StrategicInitiative } from "./types";
+
+export async function getStrategicObjectives(): Promise<StrategicObjective[]> {
+  if (!hasDb()) {
+    return readJson<StrategicObjective[]>("strategic-objectives.json");
+  }
+  const sql = await getDb();
+  // Assume table exists
+  const rows = await sql`SELECT * FROM strategic_objectives ORDER BY year DESC`;
+  return rows.map((r) => ({
+    id: r.id as string,
+    name: r.name as string,
+    description: r.description as string,
+    year: r.year as number,
+    progress: r.progress as number,
+  }));
+}
+
+export async function getKeyResults(objectiveId?: string): Promise<KeyResult[]> {
+  if (!hasDb()) {
+    const krs = readJson<KeyResult[]>("key-results.json");
+    if (objectiveId) return krs.filter(kr => kr.objectiveId === objectiveId);
+    return krs;
+  }
+  const sql = await getDb();
+  if (objectiveId) {
+    const rows = await sql`SELECT * FROM key_results WHERE objective_id = ${objectiveId}`;
+    return rows.map((r) => r as KeyResult);
+  }
+  const rows = await sql`SELECT * FROM key_results`;
+  return rows.map((r) => r as KeyResult);
+}
+
+export async function getStrategicInitiatives(objectiveId?: string): Promise<StrategicInitiative[]> {
+  if (!hasDb()) {
+    const initiatives = readJson<StrategicInitiative[]>("initiatives.json");
+    if (objectiveId) return initiatives.filter(ini => ini.objectiveId === objectiveId);
+    return initiatives;
+  }
+  const sql = await getDb();
+  if (objectiveId) {
+    const rows = await sql`SELECT * FROM strategic_initiatives WHERE objective_id = ${objectiveId}`;
+    return rows.map((r) => ({
+      ...r,
+      objectiveId: r.objective_id
+    } as StrategicInitiative));
+  }
+  const rows = await sql`SELECT * FROM strategic_initiatives`;
+  return rows.map((r) => ({
+    ...r,
+    objectiveId: r.objective_id
+  } as StrategicInitiative));
+}

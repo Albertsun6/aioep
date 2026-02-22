@@ -7,5 +7,14 @@
     "currentPhase": "phase-3-done",
     "status": "Phase 3 试跑完成，方法论回溯更新完成",
     "createdAt": "2026-02-15"
+  },
+  {
+    "id": "erp",
+    "name": "erp多语言",
+    "description": "多语言",
+    "techStack": "",
+    "currentPhase": "phase-0",
+    "status": "规划中",
+    "createdAt": "2026-02-22"
   }
 ]
