@@ -40,15 +40,15 @@ function AppShell({ children }: { children: React.ReactNode }) {
 
   // Determine the active menu key from current path
   const getSelectedKey = () => {
-    if (pathname === "/") return "dashboard";
+    if (pathname === "/") return "home";
     if (pathname.startsWith("/platform/methodology")) return "platform-methodology";
     if (pathname.startsWith("/platform/methods")) return "platform-methods";
     if (pathname.startsWith("/platform/assets") || pathname.startsWith("/platform")) return "platform-assets";
     if (pathname.match(/\/projects\/[^/]+\/sdlc/)) return "project-sdlc";
     if (pathname.match(/\/projects\/[^/]+\/gap-fit/)) return "project-gapfit";
-    if (pathname.match(/\/projects\/[^/]+/)) return "project-overview";
+    if (pathname.match(/\/projects\/[^/]+/)) return "project-dashboard";
     if (pathname === "/projects") return "projects-list";
-    return "dashboard";
+    return "home";
   };
 
   const getOpenKeys = () => {
@@ -60,9 +60,9 @@ function AppShell({ children }: { children: React.ReactNode }) {
 
   const menuItems: MenuProps["items"] = [
     {
-      key: "dashboard",
+      key: "home",
       icon: <DashboardOutlined />,
-      label: "Dashboard",
+      label: "Home",
     },
 
     // ─── Platform (知识层) ───────────────────────────────
@@ -108,7 +108,7 @@ function AppShell({ children }: { children: React.ReactNode }) {
               icon: <FolderOutlined />,
               label: currentProject.name,
               children: [
-                { key: "project-overview", label: "概览" },
+                { key: "project-dashboard", icon: <DashboardOutlined />, label: "Dashboard" },
                 { key: "project-sdlc", icon: <AppstoreOutlined />, label: "SDLC 看板" },
                 { key: "project-gapfit", label: "Gap-Fit" },
               ],
@@ -124,12 +124,12 @@ function AppShell({ children }: { children: React.ReactNode }) {
   const handleMenuClick: MenuProps["onClick"] = ({ key }) => {
     if (key === "ai") { setChatOpen(true); return; }
     const routes: Record<string, string> = {
-      dashboard: "/",
+      home: "/",
       "platform-methodology": "/platform/methodology",
       "platform-methods": "/platform/methods",
       "platform-assets": "/platform/assets",
       "projects-list": "/projects",
-      "project-overview": currentProject ? `/projects/${currentProject.id}` : "/projects",
+      "project-dashboard": currentProject ? `/projects/${currentProject.id}` : "/projects",
       "project-sdlc": currentProject ? `/projects/${currentProject.id}/sdlc` : "/projects",
       "project-gapfit": currentProject ? `/projects/${currentProject.id}/gap-fit` : "/projects",
     };
@@ -236,6 +236,8 @@ function AppShell({ children }: { children: React.ReactNode }) {
   );
 }
 
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
@@ -244,11 +246,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className="bg-[var(--background)] text-[var(--foreground)]">
-        <ConfigProvider theme={{ token: { colorPrimary: "#2563eb", borderRadius: 10 } }}>
-          <ProjectProvider>
-            <AppShell>{children}</AppShell>
-          </ProjectProvider>
-        </ConfigProvider>
+        <AntdRegistry>
+          <ConfigProvider theme={{ token: { colorPrimary: "#2563eb", borderRadius: 10 } }}>
+            <ProjectProvider>
+              <AppShell>{children}</AppShell>
+            </ProjectProvider>
+          </ConfigProvider>
+        </AntdRegistry>
       </body>
     </html>
   );
