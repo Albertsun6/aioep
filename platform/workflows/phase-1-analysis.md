@@ -6,7 +6,7 @@ description: Phase 1 需求分析与设计阶段的导航和引导。当用户�
 
 ## 上下文获取
 
-1. 读取项目上下文：`.cursor/rules/project-context.md`
+1. 读取项目上下文：`.agent/rules/project-context.md`
 2. 确认当前在 Phase 1 的哪个活动、哪个步骤
 3. 如果 AIOEP 仓库在工作区内，读取方法论和方法文件
 

@@ -10,10 +10,10 @@ AIOEP 是一个 AI 驱动的组织效能平台，核心能力：
 
 - **方法论内核**：AI-EADM 9 域方法论体系（核心原则 → 质量框架 → 治理模型）
 - **方法引擎**：分析/开发/交付方法 + 模板，按 SDLC 阶段导航
-- **Skills 引擎**：L1/L2/L3 三级 AI 技能，自动匹配当前活动
+- **Workflows 引擎**：L1/L2/L3 三级 AI 工作流，自动匹配当前活动
 - **Web Dashboard**：可视化看板（SDLC 进度、Gap-Fit 工作台、AI 对话）
 - **项目上下文**：AI 每次对话自动感知项目状态
-- **工具集成**：Cursor Rules/Skills + Archi + draw.io + GitHub
+- **工具集成**：Antigravity Rules/Workflows + Archi + draw.io + GitHub
 
 ## 当前版本
 
@@ -33,14 +33,14 @@ aioep/
 │   │   ├── AIOEP-设计.md
 │   │   ├── 00-方法论/               # AI-EADM 理论体系
 │   │   └── 01-方法/                 # 实践指南
-│   ├── skills/                    # Skills 模板库
+│   ├── workflows/                 # Workflows 模板库
 │   ├── models/                    # 数据模型
 │   ├── rules/                     # AI Agent 规则
 │   └── web/                       # Web Dashboard（Next.js）
 ├── projects/                      # 项目存放区（支持 Multi-root 工作区）
 │   ├── .gitkeep                   # 空目录占位
 │   └── (例如将来增加 erp 项目)
-├── aioep.code-workspace           # 全局 VS Code/Cursor 工作区配置
+├── aioep.code-workspace           # 全局 VS Code/Antigravity 工作区配置
 └── README.md
 ```
 
@@ -68,7 +68,7 @@ AIOEP 是平台/方法论层，项目仓库是应用实例层：
 ```
 aioep（本仓库）              erp（项目实例）
 ──────────────              ──────────────
-方法论 + 方法 + Skills       项目文档 + 代码 + 配置
+方法论 + 方法 + Workflows       项目文档 + 代码 + 配置
 "用什么、怎么做"             "实际做了什么"
 ```
 
@@ -77,7 +77,7 @@ aioep（本仓库）              erp（项目实例）
 ## 使用方式
 
 1. 克隆本仓库和项目仓库到同一目录
-2. 在 Cursor 中打开为多根工作区（Multi-root Workspace）
+2. 在 VS Code/Antigravity 中打开为多根工作区（Multi-root Workspace）
 3. AI 可同时读取方法论文档和项目文件
 4. 启动 Web Dashboard 获得可视化操作界面
 

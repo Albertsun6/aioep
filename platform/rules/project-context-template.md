@@ -1,11 +1,11 @@
 ---
-description: 项目上下文模板。复制到项目仓库 .cursor/rules/project-context.md 使用。
+description: 项目上下文模板。复制到项目仓库 .agent/rules/project-context.md 使用。
 ---
 
 # 项目上下文模板
 
 > 使用方法：
-> 1. 复制本文件到项目仓库 `.cursor/rules/project-context.md`
+> 1. 复制本文件到项目仓库 `.agent/rules/project-context.md`
 > 2. 修改 frontmatter 的 description（去掉"模板"字样）
 > 3. 填充各字段的实际值
 > 4. 每次对话结束后更新进度

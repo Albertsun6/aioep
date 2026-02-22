@@ -19,7 +19,7 @@ AIOEP 平台 — 8 个模块
 │   └── M4 Skills 引擎    ← AI 可执行的方法指令
 │
 ├── 集成层（v0.1 部分 + v0.2）
-│   ├── M5 Cursor 集成    ← Rules/Skills 自动管理
+│   ├── M5 Antigravity 集成    ← Rules/Workflows 自动管理
 │   └── M6 外部工具集成    ← Archi/draw.io/GitHub 桥接
 │
 └── 扩展层（v0.3+）
@@ -54,7 +54,7 @@ AIOEP 平台 — 8 个模块
          │
          ▼
     ┌─────────┐
-    │M5 Cursor│
+    │M5 Antigravity│
     │   集成  │
     └────┬────┘
          │
@@ -131,19 +131,19 @@ AIOEP 平台 — 8 个模块
 |------|------|
 | **职责** | 定义项目上下文的标准格式（project-context.md）；维护当前阶段/活动/步骤进度；记录上次对话摘要和下一步行动；提供方法文件路径引用 |
 | **不做** | 不存储对话历史（那是 Chatlog）；不管理多个项目（那是 M7） |
-| **核心接口** | 输入：人工更新或 AI 辅助更新的状态信息<br>输出：结构化的项目上下文（Cursor Rule 格式，AI 每次对话自动读取） |
+| **核心接口** | 输入：人工更新或 AI 辅助更新的状态信息<br>输出：结构化的项目上下文（Antigravity Rule 格式，AI 每次对话自动读取） |
 | **依赖** | M1（引用方法论阶段定义） |
 | **被依赖** | M4 Skills 引擎（读取上下文决定加载哪个 Skill）、M7 多项目管理 |
 
 **v0.1 实现**：
-- 形态：`项目仓库/.cursor/rules/project-context.md`
-- 格式：Cursor Rule 格式（带 frontmatter `globs: ["**"]`，每次对话自动加载）
+- 形态：`项目仓库/.agent/rules/project-context.md`
+- 格式：Antigravity Rule 格式（带 frontmatter `globs: ["**"]`，每次对话自动加载）
 - 内容字段：项目名称、方法论版本、当前阶段、当前活动、活动进度、方法文件路径、上次对话摘要、下一步行动
 - 更新方式：每次对话结束时 AI 辅助更新（或人工更新）
 
 **v0.2 演进**：CLI 命令 `aioep status` 读取并展示项目上下文；`aioep advance` 推进到下一步
 
-**ERP 验证场景**：新开一个 Cursor 对话，AI 是否能自动读取 project-context.md 并知道 ERP 当前在 Phase 1 的哪个步骤
+**ERP 验证场景**：新开一个 Antigravity 对话，AI 是否能自动读取 project-context.md 并知道 ERP 当前在 Phase 1 的哪个步骤
 
 **project-context.md 格式规范**：
 
@@ -175,10 +175,10 @@ globs: ["**"]
 | 维度 | 内容 |
 |------|------|
 | **职责** | 管理 L1/L2/L3 三级 Skills；定义 Skill 的标准格式（SKILL.md）；将方法文件转化为 AI 可执行的精简指令；提供 Skill 与方法文件、模板、检查清单的映射关系 |
-| **不做** | 不重复方法文件内容（Skill 引用方法文件，不复制）；不管理 Cursor 的 Skill 加载机制（那是 M5） |
-| **核心接口** | 输入：当前活动（来自 M3）+ 对应方法文件（来自 M2）<br>输出：SKILL.md 文件（Cursor Skills 格式） |
+| **不做** | 不重复方法文件内容（Workflow 引用方法文件，不复制）；不管理 Antigravity 的 Workflow 加载机制（那是 M5） |
+| **核心接口** | 输入：当前活动（来自 M3）+ 对应方法文件（来自 M2）<br>输出：workflow.md 文件（Antigravity Workflows 格式） |
 | **依赖** | M2（引用方法文件）、M3（读取当前活动） |
-| **被依赖** | M5 Cursor 集成（将 Skill 部署到项目仓库的 .cursor/skills/） |
+| **被依赖** | M5 Antigravity 集成（将 Workflow 部署到项目仓库的 .agent/workflows/） |
 
 **三级颗粒度**：
 
@@ -190,21 +190,21 @@ globs: ["**"]
 
 **v0.1 实现**：
 - 存储位置：AIOEP 仓库 `skills/` 目录（模板源头）
-- 部署位置：项目仓库 `.cursor/skills/` 目录（Cursor 自动加载）
+- 部署位置：项目仓库 `.agent/workflows/` 目录（Antigravity 自动加载）
 - 同步方式：手动复制（v0.2 由 CLI 自动化）
-- 首个 Skill：`phase-1-analysis/SKILL.md`（L1 级）
+- 首个 Workflow：`phase-1-analysis.md`（L1 级）
 
-**SKILL.md 标准格式**：
+**Workflow 标准格式**：
 
 ```markdown
 ---
-description: [Skill 描述，用于 Cursor 匹配]
+description: [Workflow 描述，用于 Antigravity 匹配]
 ---
 
-# [Skill 名称]
+# [Workflow 名称]
 
 ## 上下文
-1. 读取项目上下文：`.cursor/rules/project-context.md`
+1. 读取项目上下文：`.agent/rules/project-context.md`
 2. 确认当前阶段和活动
 
 ## 方法引用
@@ -231,27 +231,27 @@ description: [Skill 描述，用于 Cursor 匹配]
 
 ---
 
-### M5 Cursor 集成 (Cursor Integration)
+### M5 Antigravity 集成 (Antigravity Integration)
 
-**一句话**：管理 Cursor Rules 和 Skills 的生成、同步和配置。
+**一句话**：管理 Antigravity Rules 和 Workflows 的生成、同步和配置。
 
 | 维度 | 内容 |
 |------|------|
-| **职责** | 将 AIOEP 的 Rules 模板部署到项目仓库的 `.cursor/rules/`；将 Skills 同步到项目仓库的 `.cursor/skills/`；管理 Cursor 多根工作区配置 |
-| **不做** | 不定义 Skill 内容（那是 M4）；不修改 Cursor IDE 本身 |
-| **核心接口** | 输入：Rules 模板（来自 AIOEP rules/）+ Skills 文件（来自 M4）<br>输出：项目仓库 .cursor/ 目录中的文件 |
-| **依赖** | M4（提供 Skill 文件） |
-| **被依赖** | M7（新项目初始化需要部署 Rules/Skills）、M8 |
+| **职责** | 将 AIOEP 的 Rules 模板部署到项目仓库的 `.agent/rules/`；将 Workflows 同步到项目仓库的 `.agent/workflows/`；管理 VS Code 多根工作区配置 |
+| **不做** | 不定义 Workflow 内容（那是 M4）；不修改 Antigravity 基础本身 |
+| **核心接口** | 输入：Rules 模板（来自 AIOEP rules/）+ Workflows 文件（来自 M4）<br>输出：项目仓库 .agent/ 目录中的文件 |
+| **依赖** | M4（提供 Workflow 文件） |
+| **被依赖** | M7（新项目初始化需要部署 Rules/Workflows）、M8 |
 
 **v0.1 实现**：
 - Rules 模板：AIOEP 仓库 `rules/` 目录存放通用模板
-- 部署方式：手动复制到项目仓库 `.cursor/rules/`
-- 项目特定 Rules：直接在项目仓库 `.cursor/rules/` 创建和维护
+- 部署方式：手动复制到项目仓库 `.agent/rules/`
+- 项目特定 Rules：直接在项目仓库 `.agent/rules/` 创建和维护
 - 多根工作区：手动配置（文档指导）
 
 **v0.2 演进**：CLI 命令 `aioep sync` 自动同步
 
-**ERP 验证场景**：ERP 仓库的 `.cursor/rules/` 和 `.cursor/skills/` 是否正确加载
+**ERP 验证场景**：ERP 仓库的 `.agent/rules/` 和 `.agent/workflows/` 是否正确加载
 
 ---
 
@@ -288,7 +288,7 @@ description: [Skill 描述，用于 Cursor 匹配]
 | **职责** | 定义共享层/项目层的分离规范；项目初始化（从 AIOEP 模板创建新项目）；跨项目的方法演进同步 |
 | **不做** | 不管理项目内部的文档和代码（那是项目仓库自己的事） |
 | **核心接口** | 输入：项目模板 + 项目配置<br>输出：初始化完成的项目仓库 |
-| **依赖** | M3（每个项目有自己的 project-context）、M5（每个项目需要 Rules/Skills） |
+| **依赖** | M3（每个项目有自己的 project-context）、M5（每个项目需要 Rules/Workflows） |
 | **被依赖** | M8 Web 看板（展示多项目状态） |
 
 **v0.1 实现**：
@@ -309,10 +309,10 @@ description: [Skill 描述，用于 Cursor 匹配]
 
 | 维度 | 内容 |
 |------|------|
-| **职责** | 多项目状态看板；方法论浏览和导航；Skills 在线管理；质量门禁可视化 |
-| **不做** | 不替代 Cursor 作为开发 UI；不存储原始数据（读取文件系统或 API） |
+| **职责** | 多项目状态看板；方法论浏览和导航；Workflows 在线管理；质量门禁可视化 |
+| **不做** | 不替代 Antigravity 作为开发 UI；不存储原始数据（读取文件系统或 API） |
 | **核心接口** | 输入：各项目的 project-context + AIOEP 方法论文档<br>输出：Web UI |
-| **依赖** | M5（读取 Cursor 配置）、M7（读取多项目信息） |
+| **依赖** | M5（读取 Antigravity 配置）、M7（读取多项目信息） |
 | **被依赖** | 无（最上层 UI） |
 
 **v0.1 实现**：不实现（使用已有的 erp-portal 作为原型参考）
@@ -332,7 +332,7 @@ Step 1: M1 方法论内核     → 已完成（目录结构+文档已建立）
 Step 2: M3 项目上下文     → 创建 project-context.md
 Step 3: M2 方法引擎       → 已部分完成（方法目录+格式已定义）
 Step 4: M4 Skills 引擎    → 创建第一个 Skill
-Step 5: M5 Cursor 集成    → 部署 Rules + Skills 到 ERP 仓库
+Step 5: M5 Antigravity 集成    → 部署 Rules + Workflows 到 ERP 仓库
 ```
 
 ### v0.2 开发路径
@@ -362,7 +362,7 @@ Step 3: M6 工具集成增强   → 建模模板自动生成
 | M2 方法引擎 | **目录+格式** | 方法列表CLI | - | 方法市场 |
 | M3 项目上下文 | **project-context.md** | status/advance CLI | - | 自动更新 |
 | M4 Skills 引擎 | **首个Skill** | Phase 1 全覆盖 | Phase 2 覆盖 | Skills 市场 |
-| M5 Cursor 集成 | **手动部署** | sync CLI | - | IDE 插件 |
+| M5 Antigravity 集成 | **手动部署** | sync CLI | - | IDE 插件 |
 | M6 外部工具集成 | 文档规范 | - | 模板生成 | 自动化桥接 |
 | M7 多项目管理 | 目录约定 | **init CLI** | **验证** | 完整管理 |
 | M8 Web 看板 | - | - | **MVP** | 完整UI |

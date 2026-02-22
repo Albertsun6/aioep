@@ -114,7 +114,7 @@
 
 **解决方案**：
 - 提炼三份核心文档的关键关注点与执行约束
-- 补充读取 `skills/phase-1-analysis/SKILL.md` 与 `docs/01-方法/分析方法/gap-fit方法.md`，将首轮动作落到可执行步骤
+- 补充读取 `workflows/phase-1-analysis/SKILL.md` 与 `docs/01-方法/分析方法/gap-fit方法.md`，将首轮动作落到可执行步骤
 - 形成最小开工路径：触发 Phase 1/Gap-Fit -> 依据 6 步产出 Gap-Fit 报告草稿 -> 更新 `project-context.md` 与 `docs/Chatlog.md`
 
 **代码改动**：
@@ -192,15 +192,15 @@
    - 详细演进路线（v0.1→v0.2→v0.3→v1.0 + 开发-验证循环）
 
 3. **Phase C — 模块拆分设计**（`docs/AIOEP-模块设计.md`）：
-   - 8 个模块：方法论内核/方法引擎/项目上下文/Skills引擎/Cursor集成/外部工具集成/多项目管理/Web看板
+   - 8 个模块：方法论内核/方法引擎/项目上下文/Workflows引擎/Antigravity集成/外部工具集成/多项目管理/Web看板
    - 每个模块含：职责/不做/接口/依赖/v0.1实现/演进方向/验证场景
    - 依赖关系图 + 开发顺序 + 模块x版本矩阵
    - 关键设计原则（文件系统优先、Skill不重复方法、模板在AIOEP实例在项目、渐进增强、AI可执行）
 
 4. **Phase D — v0.1 核心文件**：
-   - `erp/.cursor/rules/project-context.md` — ERP 项目上下文实例
-   - `aioep/skills/phase-1-analysis/SKILL.md` — 第一个 L1 阶段级 Skill
-   - `erp/.cursor/skills/phase-1-analysis/SKILL.md` — 同步到项目仓库
+   - `erp/.agent/rules/project-context.md` — ERP 项目上下文实例
+   - `aioep/workflows/phase-1-analysis/SKILL.md` — 第一个 L1 阶段级 Skill
+   - `erp/.agent/workflows/phase-1-analysis/SKILL.md` — 同步到项目仓库
    - `aioep/rules/project-context-template.md` — 通用模板
 
 5. **Phase E — 收尾**：
@@ -212,16 +212,16 @@
 - 新建 `aioep` 仓库（GitHub: Albertsun6/aioep），36+ 文件
 - 新建 `docs/AIOEP-战略规划.md`
 - 新建 `docs/AIOEP-模块设计.md`
-- 新建 `skills/phase-1-analysis/SKILL.md`
+- 新建 `workflows/phase-1-analysis/SKILL.md`
 - 新建 `rules/project-context-template.md`
 - 更新 `docs/AIOEP-设计.md`、`docs/想法收集.md`、`docs/README.md`
 - erp 仓库：删除 00-方法论/、01-方法/、AIOEP-设计.md 等已迁移文件
-- erp 仓库：新建 `.cursor/rules/project-context.md`、`.cursor/skills/phase-1-analysis/SKILL.md`
+- erp 仓库：新建 `.agent/rules/project-context.md`、`.agent/workflows/phase-1-analysis/SKILL.md`
 - erp 仓库：更新 `docs/README.md`、`README.md`
 
 **下一步**：
 - ERP 项目 Phase 1 开始：用 AIOEP v0.1 支撑 Gap-Fit 分析
-- 恢复上下文文件：`erp/.cursor/rules/project-context.md`（AI 自动读取）
+- 恢复上下文文件：`erp/.agent/rules/project-context.md`（AI 自动读取）
 
 **状态标签**：✅完成
 
@@ -289,7 +289,7 @@
 - P0 行动项（3 项）聚焦在"让 Gap-Fit 方法本身变得可执行"
 
 **解决方案**：
-- 创建 `.cursor/rules/project-context.md`（AIOEP 项目上下文，Phase 1 初始状态）
+- 创建 `.agent/rules/project-context.md`（AIOEP 项目上下文，Phase 1 初始状态）
 - 创建 `docs/02-项目/` 目录（项目产出存放位置）
 - 扫描全仓库实际状态（9 域 + 方法文件 + Skills + Rules）
 - 提取 27 项 v0.1 需求，逐项对比并标记匹配度
@@ -302,7 +302,7 @@
 - P1 行动项：细化需求建模方法 / 创建需求建模 Skill / .code-workspace / models 规范
 
 **代码改动**：
-- 新建 `.cursor/rules/project-context.md`
+- 新建 `.agent/rules/project-context.md`
 - 新建 `docs/02-项目/gap-fit报告.md`
 - 更新 `docs/Chatlog.md`
 
@@ -323,14 +323,14 @@
 **解决方案**：
 - 细化 `docs/01-方法/分析方法/gap-fit方法.md` 至 v0.2.0（6 步完整指南 + 3 张定义表 + 7 项检查清单）
 - 创建 `docs/01-方法/分析方法/模板-gap-fit报告.md`（空白报告模板，7 章节结构）
-- 创建 `skills/gap-fit-analysis/SKILL.md`（L2 方法级 Skill，引用方法文件和模板）
+- 创建 `workflows/gap-fit-analysis/SKILL.md`（L2 方法级 Skill，引用方法文件和模板）
 - 更新 project-context.md（P0 行动项已闭环，下一步推进到活动 3）
 
 **代码改动**：
 - 重写 `docs/01-方法/分析方法/gap-fit方法.md`（纲要 → 已细化）
 - 新建 `docs/01-方法/分析方法/模板-gap-fit报告.md`
-- 新建 `skills/gap-fit-analysis/SKILL.md`
-- 更新 `.cursor/rules/project-context.md`
+- 新建 `workflows/gap-fit-analysis/SKILL.md`
+- 更新 `.agent/rules/project-context.md`
 - 更新 `docs/Chatlog.md`
 
 **状态标签**：✅完成
@@ -347,7 +347,7 @@
 - 剩余 P1 项（需求建模方法/Skill）按 Just-in-time 原则，等 ERP 推进到活动 3 时再做
 
 **解决方案**：
-- 创建 `aioep-erp.code-workspace`（Cursor 多根工作区，同时打开 ERP + AIOEP）
+- 创建 `aioep-erp.code-workspace`（Antigravity 多根工作区，同时打开 ERP + AIOEP）
 - 创建 `models/` 目录结构 + README 规范（archimate/bpmn/uml/c4）
 - 确认 ERP 仓库状态：project-context.md 指向 Gap-Fit Step 0/6，6 条 Rules 就位
 - 同步 Skills 到 ERP：phase-1-analysis（更新）+ gap-fit-analysis（新增）
@@ -356,8 +356,8 @@
 **代码改动**：
 - 新建 `aioep-erp.code-workspace`
 - 新建 `models/README.md` + 4 个子目录
-- 同步 `skills/` → `erp/.cursor/skills/`（2 个 Skill）
-- 更新 `.cursor/rules/project-context.md`
+- 同步 `workflows/` → `erp/.agent/workflows/`（2 个 Skill）
+- 更新 `.agent/rules/project-context.md`
 - 更新 `docs/Chatlog.md`
 
 **状态标签**：✅完成
@@ -381,7 +381,7 @@
 - 新建 `docs/01-方法/交付方法/模板-部署检查清单.md`：三合一模板（环境准备 + 迁移校验 + 上线检查）
 - 修改 `docs/01-方法/交付方法/培训交接方法.md`：5 步骤细化（用户培训 + 操作手册 + 运维手册 + 观察期 + 正式交接）、培训角色矩阵、交接物清单、SLA 定义
 - 新建 `docs/01-方法/交付方法/模板-培训计划.md`：三合一模板（培训日程 + 观察期 + 交接确认）
-- 更新 `erp/.cursor/rules/project-context.md`：记录交付方法补全状态
+- 更新 `erp/.agent/rules/project-context.md`：记录交付方法补全状态
 
 **状态标签**：✅完成
 
@@ -410,7 +410,7 @@
 - 新建 `erp/docs/02-项目/操作手册-采购.md`：采购员+采购经理+管理员操作手册
 - 新建 `erp/docs/02-项目/运维手册.md`：系统架构+日常维护+备份恢复+故障排查
 - 新建 `erp/docs/02-项目/培训计划.md`：培训日程+考核+观察期+交接确认
-- 更新 `erp/.cursor/rules/project-context.md`：Phase 3 试跑完成状态
+- 更新 `erp/.agent/rules/project-context.md`：Phase 3 试跑完成状态
 
 **状态标签**：✅完成
 
@@ -444,7 +444,7 @@
 - 更新 `aioep/docs/01-方法/分析方法/gap-fit方法.md`：v0.2.0 → v0.3.0
 - 更新 `aioep/docs/01-方法/开发方法/odoo-patterns.md`：v0.2.0 → v0.3.0
 - 更新 `aioep/docs/01-方法/开发方法/sprint执行方法.md`：v0.1.0 → v0.2.0
-- 更新 `erp/.cursor/rules/project-context.md`：添加方法论更新清单
+- 更新 `erp/.agent/rules/project-context.md`：添加方法论更新清单
 
 **状态标签**：✅完成
 
@@ -452,7 +452,7 @@
 
 ## 2026-02-18 04:10 — AIOEP Web Dashboard MVP 开发
 
-**用户需求**：将 AIOEP 方法论讨论工具化，开发 Web 可视化界面，解决 Cursor 中信息分散、状态不直观、操作门槛高的问题
+**用户需求**：将 AIOEP 方法论讨论工具化，开发 Web 可视化界面，解决 Antigravity 中信息分散、状态不直观、操作门槛高的问题
 
 **解决方案**：
 - 技术选型：Next.js 16 (App Router) + TypeScript + Tailwind CSS + Recharts
@@ -541,7 +541,7 @@
 - 扫描两个仓库（aioep 42 文档 + erp 14 文档 + 7 条 rules + 4 个 skills）的文档分布
 - 确认架构已合理："AIOEP = 方法论/方法/模板源头，ERP = 项目交付物实例"
 - AIOEP `docs/02-项目/gap-fit报告.md` 是 AIOEP 自身分析（非 ERP 项目复制），位置正确
-- ERP `.cursor/rules/` 7 条 Odoo 开发规则是实战经验沉淀，但 AIOEP 方法层没有对应文档承接
+- ERP `.agent/rules/` 7 条 Odoo 开发规则是实战经验沉淀，但 AIOEP 方法层没有对应文档承接
 - 新建 `aioep/docs/01-方法/开发方法/odoo-开发规范.md`（v0.1.0），从 ERP 7 条 rules 提炼并统一：
   - 模块结构、模型规范、Python 编码风格、XML 视图规范、安全与权限、测试规范、Git 工作流、AI 协作注释
 - 与已有 `odoo-patterns.md`（设计模式）形成互补：patterns = 怎么设计，开发规范 = 怎么写
