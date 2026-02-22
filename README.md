@@ -28,23 +28,19 @@ AIOEP 是一个 AI 驱动的组织效能平台，核心能力：
 
 ```
 aioep/
-├── docs/
-│   ├── AIOEP-设计.md              # 平台顶层设计
-│   ├── AIOEP-架构.md              # 平台架构（v1.0.0）
-│   ├── AIOEP-战略规划.md          # 平台战略规划
-│   ├── AIOEP-模块设计.md          # 模块拆分与设计
-│   ├── 想法收集.md                # 待探索想法
-│   ├── 术语表.md                  # 统一术语表
-│   ├── Chatlog.md                 # 对话记录
-│   ├── 00-方法论/                 # AI-EADM 方法论（9域体系）
-│   ├── 01-方法/                   # 实践方法（分析/开发/交付）
-│   └── 02-项目/                   # AIOEP 自身项目文档
-├── skills/                        # Skills 模板库
-├── web/                           # Web Dashboard（Next.js + Ant Design）
-│   ├── app/                       # 页面（Dashboard / SDLC / Gap-Fit）
-│   ├── app/api/                   # API Route（projects / sdlc / gap-fit / chat）
-│   ├── data/                      # 结构化 JSON 数据
-│   └── components/                # AI 聊天面板
+├── platform/                      # AIOEP 平台核心
+│   ├── docs/                      # 平台设计与方法论中心
+│   │   ├── AIOEP-设计.md
+│   │   ├── 00-方法论/               # AI-EADM 理论体系
+│   │   └── 01-方法/                 # 实践指南
+│   ├── skills/                    # Skills 模板库
+│   ├── models/                    # 数据模型
+│   ├── rules/                     # AI Agent 规则
+│   └── web/                       # Web Dashboard（Next.js）
+├── projects/                      # 项目存放区（支持 Multi-root 工作区）
+│   ├── .gitkeep                   # 空目录占位
+│   └── (例如将来增加 erp 项目)
+├── aioep.code-workspace           # 全局 VS Code/Cursor 工作区配置
 └── README.md
 ```
 
@@ -53,7 +49,7 @@ aioep/
 启动方式：
 
 ```bash
-cd web && npm install && npm run dev
+cd platform/web && npm install && npm run dev
 # 访问 http://localhost:3000
 ```
 
@@ -89,7 +85,7 @@ aioep（本仓库）              erp（项目实例）
 
 本平台基于 **AI-EADM**（AI Enterprise Application Development Methodology / AI 企业应用开发方法论）。
 
-详见 [方法论总纲](./docs/00-方法论/README.md)。
+详见 [方法论总纲](./platform/docs/00-方法论/README.md)。
 
 ## License
 

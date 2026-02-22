@@ -1,7 +1,13 @@
 {
   "folders": [
-    { "path": "/Users/albert/Desktop/erp", "name": "ERP 项目" },
-    { "path": "/Users/albert/Desktop/aioep", "name": "AIOEP 平台" }
+    {
+      "path": "platform",
+      "name": "AIOEP Platform"
+    },
+    {
+      "path": "projects/erp",
+      "name": "ERP Project (Example)"
+    }
   ],
   "settings": {
     "files.exclude": {
