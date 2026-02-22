@@ -1,11 +1,36 @@
 {
   "currentPhase": "phase-3",
   "sprints": [
-    { "id": "sprint-0", "name": "Sprint 0", "status": "completed", "content": "标准模块安装 + 配置（Inventory, Invoicing, 多币种, 审批等）" },
-    { "id": "sprint-1", "name": "Sprint 1", "status": "completed", "content": "Sales 模块安装 + erp_purchase_approval 自定义模块开发" },
-    { "id": "sprint-2", "name": "Sprint 2", "status": "pending", "content": "erp_import_tax + erp_vendor_report" },
-    { "id": "sprint-3", "name": "Sprint 3", "status": "pending", "content": "erp_integration + erp_report + 外部服务" },
-    { "id": "sprint-4", "name": "Sprint 4", "status": "pending", "content": "全模块联调 + Bug 修复 + 性能优化" }
+    {
+      "id": "sprint-0",
+      "name": "Sprint 0",
+      "status": "completed",
+      "content": "标准模块安装 + 配置（Inventory, Invoicing, 多币种, 审批等）"
+    },
+    {
+      "id": "sprint-1",
+      "name": "Sprint 1",
+      "status": "completed",
+      "content": "Sales 模块安装 + erp_purchase_approval 自定义模块开发"
+    },
+    {
+      "id": "sprint-2",
+      "name": "Sprint 2",
+      "status": "pending",
+      "content": "erp_import_tax + erp_vendor_report"
+    },
+    {
+      "id": "sprint-3",
+      "name": "Sprint 3",
+      "status": "pending",
+      "content": "erp_integration + erp_report + 外部服务"
+    },
+    {
+      "id": "sprint-4",
+      "name": "Sprint 4",
+      "status": "pending",
+      "content": "全模块联调 + Bug 修复 + 性能优化"
+    }
   ],
   "phases": [
     {
@@ -16,27 +41,108 @@
       "progress": 100,
       "duration": "第 1~2 周",
       "milestones": [
-        { "id": "m0-strategy", "name": "战略规划完成", "completed": true },
-        { "id": "m0-methodology", "name": "AI-EADM 方法论 9 域文档", "completed": true },
-        { "id": "m0-env", "name": "Docker 环境一键启动", "completed": true },
-        { "id": "m0-ci", "name": "CI 流水线可用", "completed": true }
+        {
+          "id": "m0-strategy",
+          "name": "战略规划完成",
+          "completed": true
+        },
+        {
+          "id": "m0-methodology",
+          "name": "AI-EADM 方法论 9 域文档",
+          "completed": true
+        },
+        {
+          "id": "m0-env",
+          "name": "Docker 环境一键启动",
+          "completed": true
+        },
+        {
+          "id": "m0-ci",
+          "name": "CI 流水线可用",
+          "completed": true
+        }
       ],
       "deliverables": [
-        { "id": "d0-strategy", "name": "战略规划文档", "completed": true, "path": "docs/02-项目/战略规划.md" },
-        { "id": "d0-methodology", "name": "AI-EADM 方法论文档", "completed": true, "path": "docs/00-方法论/" },
-        { "id": "d0-methods", "name": "方法文档", "completed": true, "path": "docs/01-方法/" },
-        { "id": "d0-docker", "name": "Docker 环境", "completed": true, "path": "docker-compose.yml" },
-        { "id": "d0-rules", "name": "Cursor Rules", "completed": true, "path": ".cursor/rules/" },
-        { "id": "d0-glossary", "name": "术语表", "completed": true, "path": "docs/术语表.md" }
+        {
+          "id": "d0-strategy",
+          "name": "战略规划文档",
+          "completed": true,
+          "path": "docs/02-项目/战略规划.md"
+        },
+        {
+          "id": "d0-methodology",
+          "name": "AI-EADM 方法论文档",
+          "completed": true,
+          "path": "docs/00-方法论/"
+        },
+        {
+          "id": "d0-methods",
+          "name": "方法文档",
+          "completed": true,
+          "path": "docs/01-方法/"
+        },
+        {
+          "id": "d0-docker",
+          "name": "Docker 环境",
+          "completed": true,
+          "path": "docker-compose.yml"
+        },
+        {
+          "id": "d0-rules",
+          "name": "Antigravity Rules",
+          "completed": true,
+          "path": ".agent/rules/"
+        },
+        {
+          "id": "d0-glossary",
+          "name": "术语表",
+          "completed": true,
+          "path": "docs/术语表.md"
+        }
       ],
       "gateChecks": [
-        { "id": "g0-1", "description": "Docker 开发环境可用", "passed": true, "standard": "docker-compose up -d 所有容器正常运行" },
-        { "id": "g0-2", "description": "Odoo 可访问", "passed": true, "standard": "浏览器 http://localhost:8069 可看到登录页" },
-        { "id": "g0-3", "description": "数据库连接", "passed": true, "standard": "Odoo 登录后可创建/查看记录" },
-        { "id": "g0-4", "description": "Cursor Rules 完整", "passed": true, "standard": "6 个规则文件存在且内容完整" },
-        { "id": "g0-5", "description": "Git + CI", "passed": true, "standard": "push 到 GitHub 触发 Actions 通过" },
-        { "id": "g0-6", "description": "测试模块通过", "passed": true, "standard": "模块安装成功，测试用例通过" },
-        { "id": "g0-7", "description": "项目文档", "passed": true, "standard": "README、Chatlog 规范在用" }
+        {
+          "id": "g0-1",
+          "description": "Docker 开发环境可用",
+          "passed": true,
+          "standard": "docker-compose up -d 所有容器正常运行"
+        },
+        {
+          "id": "g0-2",
+          "description": "Odoo 可访问",
+          "passed": true,
+          "standard": "浏览器 http://localhost:8069 可看到登录页"
+        },
+        {
+          "id": "g0-3",
+          "description": "数据库连接",
+          "passed": true,
+          "standard": "Odoo 登录后可创建/查看记录"
+        },
+        {
+          "id": "g0-4",
+          "description": "Antigravity Rules 完整",
+          "passed": true,
+          "standard": "6 个规则文件存在且内容完整"
+        },
+        {
+          "id": "g0-5",
+          "description": "Git + CI",
+          "passed": true,
+          "standard": "push 到 GitHub 触发 Actions 通过"
+        },
+        {
+          "id": "g0-6",
+          "description": "测试模块通过",
+          "passed": true,
+          "standard": "模块安装成功，测试用例通过"
+        },
+        {
+          "id": "g0-7",
+          "description": "项目文档",
+          "passed": true,
+          "standard": "README、Chatlog 规范在用"
+        }
       ]
     },
     {
@@ -47,24 +153,89 @@
       "progress": 100,
       "duration": "第 3~4 周",
       "milestones": [
-        { "id": "m1-gapfit", "name": "Gap-Fit 分析完成（采购域）", "completed": true },
-        { "id": "m1-modeling", "name": "需求建模完成（供应商评分试点）", "completed": true },
-        { "id": "m1-architecture", "name": "系统架构设计 v0.2.0", "completed": true },
-        { "id": "m1-review", "name": "Phase 1 评审通过", "completed": true }
+        {
+          "id": "m1-gapfit",
+          "name": "Gap-Fit 分析完成（采购域）",
+          "completed": true
+        },
+        {
+          "id": "m1-modeling",
+          "name": "需求建模完成（供应商评分试点）",
+          "completed": true
+        },
+        {
+          "id": "m1-architecture",
+          "name": "系统架构设计 v0.2.0",
+          "completed": true
+        },
+        {
+          "id": "m1-review",
+          "name": "Phase 1 评审通过",
+          "completed": true
+        }
       ],
       "deliverables": [
-        { "id": "d1-gapfit", "name": "Gap-Fit 分析报告", "completed": true, "path": "docs/02-项目/gap-fit报告.md" },
-        { "id": "d1-modeling", "name": "需求建模文档", "completed": true, "path": "docs/02-项目/需求建模-供应商评分.md" },
-        { "id": "d1-arch", "name": "系统架构设计", "completed": true, "path": "docs/02-项目/系统架构设计.md" },
-        { "id": "d1-review", "name": "Phase 1 评审记录", "completed": true, "path": "docs/02-项目/phase1-评审记录.md" },
-        { "id": "d1-sprint-plan", "name": "Sprint 规划", "completed": true }
+        {
+          "id": "d1-gapfit",
+          "name": "Gap-Fit 分析报告",
+          "completed": true,
+          "path": "docs/02-项目/gap-fit报告.md"
+        },
+        {
+          "id": "d1-modeling",
+          "name": "需求建模文档",
+          "completed": true,
+          "path": "docs/02-项目/需求建模-供应商评分.md"
+        },
+        {
+          "id": "d1-arch",
+          "name": "系统架构设计",
+          "completed": true,
+          "path": "docs/02-项目/系统架构设计.md"
+        },
+        {
+          "id": "d1-review",
+          "name": "Phase 1 评审记录",
+          "completed": true,
+          "path": "docs/02-项目/phase1-评审记录.md"
+        },
+        {
+          "id": "d1-sprint-plan",
+          "name": "Sprint 规划",
+          "completed": true
+        }
       ],
       "gateChecks": [
-        { "id": "g1-1", "description": "Gap-Fit 分析至少完成 1 个核心业务域", "passed": true, "standard": "采购域 25 项需求全部评估" },
-        { "id": "g1-2", "description": "需求建模完成核心业务域", "passed": true, "standard": "BPMN + UML + RBAC + BDD" },
-        { "id": "g1-3", "description": "RBAC 设计含安全组继承关系", "passed": true, "standard": "权限矩阵已设计" },
-        { "id": "g1-4", "description": "Sprint 规划基于 Gap-Fit 结果", "passed": true, "standard": "Sprint 0~4 已规划" },
-        { "id": "g1-5", "description": "文档完整且已确认", "passed": true, "standard": "BRD/Gap-Fit/架构设计存在" }
+        {
+          "id": "g1-1",
+          "description": "Gap-Fit 分析至少完成 1 个核心业务域",
+          "passed": true,
+          "standard": "采购域 25 项需求全部评估"
+        },
+        {
+          "id": "g1-2",
+          "description": "需求建模完成核心业务域",
+          "passed": true,
+          "standard": "BPMN + UML + RBAC + BDD"
+        },
+        {
+          "id": "g1-3",
+          "description": "RBAC 设计含安全组继承关系",
+          "passed": true,
+          "standard": "权限矩阵已设计"
+        },
+        {
+          "id": "g1-4",
+          "description": "Sprint 规划基于 Gap-Fit 结果",
+          "passed": true,
+          "standard": "Sprint 0~4 已规划"
+        },
+        {
+          "id": "g1-5",
+          "description": "文档完整且已确认",
+          "passed": true,
+          "standard": "BRD/Gap-Fit/架构设计存在"
+        }
       ]
     },
     {
@@ -75,27 +246,101 @@
       "progress": 40,
       "duration": "第 5~16 周",
       "milestones": [
-        { "id": "m2-sprint0", "name": "Sprint 0 基础配置完成", "completed": true },
-        { "id": "m2-sprint1", "name": "Sprint 1 采购审批完成", "completed": true },
-        { "id": "m2-sprint2", "name": "Sprint 2 进口税费+报表", "completed": false },
-        { "id": "m2-sprint3", "name": "Sprint 3 集成+报表", "completed": false },
-        { "id": "m2-sprint4", "name": "Sprint 4 全模块联调", "completed": false }
+        {
+          "id": "m2-sprint0",
+          "name": "Sprint 0 基础配置完成",
+          "completed": true
+        },
+        {
+          "id": "m2-sprint1",
+          "name": "Sprint 1 采购审批完成",
+          "completed": true
+        },
+        {
+          "id": "m2-sprint2",
+          "name": "Sprint 2 进口税费+报表",
+          "completed": false
+        },
+        {
+          "id": "m2-sprint3",
+          "name": "Sprint 3 集成+报表",
+          "completed": false
+        },
+        {
+          "id": "m2-sprint4",
+          "name": "Sprint 4 全模块联调",
+          "completed": false
+        }
       ],
       "deliverables": [
-        { "id": "d2-inventory", "name": "Inventory 模块安装", "completed": true },
-        { "id": "d2-invoicing", "name": "Invoicing 模块安装", "completed": true },
-        { "id": "d2-sales", "name": "Sales 模块安装", "completed": true },
-        { "id": "d2-approval", "name": "erp_purchase_approval 模块", "completed": true },
-        { "id": "d2-import-tax", "name": "erp_import_tax 模块", "completed": false },
-        { "id": "d2-vendor-report", "name": "erp_vendor_report 模块", "completed": false }
+        {
+          "id": "d2-inventory",
+          "name": "Inventory 模块安装",
+          "completed": true
+        },
+        {
+          "id": "d2-invoicing",
+          "name": "Invoicing 模块安装",
+          "completed": true
+        },
+        {
+          "id": "d2-sales",
+          "name": "Sales 模块安装",
+          "completed": true
+        },
+        {
+          "id": "d2-approval",
+          "name": "erp_purchase_approval 模块",
+          "completed": true
+        },
+        {
+          "id": "d2-import-tax",
+          "name": "erp_import_tax 模块",
+          "completed": false
+        },
+        {
+          "id": "d2-vendor-report",
+          "name": "erp_vendor_report 模块",
+          "completed": false
+        }
       ],
       "gateChecks": [
-        { "id": "g2-1", "description": "标准模块安装成功 + 配置验证", "passed": true, "standard": "采购/销售/库存/财务功能启用后可用" },
-        { "id": "g2-2", "description": "自定义模块安装成功", "passed": null, "standard": "所有 custom_addons/ 模块测试通过" },
-        { "id": "g2-3", "description": "端到端流程可走通", "passed": null, "standard": "采购→入库→销售→出库→财务" },
-        { "id": "g2-4", "description": "自定义模块测试覆盖率 ≥ 80%", "passed": null, "standard": "标准模块不计入" },
-        { "id": "g2-5", "description": "核心页面响应时间 < 2s", "passed": true, "standard": "100 条数据下" },
-        { "id": "g2-6", "description": "Odoo 安全配置检查清单通过", "passed": null, "standard": "10 项检查全部通过" }
+        {
+          "id": "g2-1",
+          "description": "标准模块安装成功 + 配置验证",
+          "passed": true,
+          "standard": "采购/销售/库存/财务功能启用后可用"
+        },
+        {
+          "id": "g2-2",
+          "description": "自定义模块安装成功",
+          "passed": null,
+          "standard": "所有 custom_addons/ 模块测试通过"
+        },
+        {
+          "id": "g2-3",
+          "description": "端到端流程可走通",
+          "passed": null,
+          "standard": "采购→入库→销售→出库→财务"
+        },
+        {
+          "id": "g2-4",
+          "description": "自定义模块测试覆盖率 ≥ 80%",
+          "passed": null,
+          "standard": "标准模块不计入"
+        },
+        {
+          "id": "g2-5",
+          "description": "核心页面响应时间 < 2s",
+          "passed": true,
+          "standard": "100 条数据下"
+        },
+        {
+          "id": "g2-6",
+          "description": "Odoo 安全配置检查清单通过",
+          "passed": null,
+          "standard": "10 项检查全部通过"
+        }
       ]
     },
     {
@@ -106,24 +351,90 @@
       "progress": 100,
       "duration": "第 17~20 周",
       "milestones": [
-        { "id": "m3-e2e", "name": "E2E 测试 10/10 通过", "completed": true },
-        { "id": "m3-uat", "name": "UAT 验收 4 场景通过", "completed": true },
-        { "id": "m3-deploy", "name": "生产配置 + 回滚演练", "completed": true },
-        { "id": "m3-training", "name": "培训计划 + 操作手册", "completed": true }
+        {
+          "id": "m3-e2e",
+          "name": "E2E 测试 10/10 通过",
+          "completed": true
+        },
+        {
+          "id": "m3-uat",
+          "name": "UAT 验收 4 场景通过",
+          "completed": true
+        },
+        {
+          "id": "m3-deploy",
+          "name": "生产配置 + 回滚演练",
+          "completed": true
+        },
+        {
+          "id": "m3-training",
+          "name": "培训计划 + 操作手册",
+          "completed": true
+        }
       ],
       "deliverables": [
-        { "id": "d3-test-report", "name": "测试报告", "completed": true, "path": "docs/02-项目/测试报告.md" },
-        { "id": "d3-deploy-checklist", "name": "部署检查清单", "completed": true, "path": "docs/02-项目/部署检查清单.md" },
-        { "id": "d3-ops-manual", "name": "操作手册-采购", "completed": true, "path": "docs/02-项目/操作手册-采购.md" },
-        { "id": "d3-admin-manual", "name": "运维手册", "completed": true, "path": "docs/02-项目/运维手册.md" },
-        { "id": "d3-training-plan", "name": "培训计划", "completed": true, "path": "docs/02-项目/培训计划.md" },
-        { "id": "d3-prod-config", "name": "docker-compose.prod.yml", "completed": true, "path": "docker-compose.prod.yml" }
+        {
+          "id": "d3-test-report",
+          "name": "测试报告",
+          "completed": true,
+          "path": "docs/02-项目/测试报告.md"
+        },
+        {
+          "id": "d3-deploy-checklist",
+          "name": "部署检查清单",
+          "completed": true,
+          "path": "docs/02-项目/部署检查清单.md"
+        },
+        {
+          "id": "d3-ops-manual",
+          "name": "操作手册-采购",
+          "completed": true,
+          "path": "docs/02-项目/操作手册-采购.md"
+        },
+        {
+          "id": "d3-admin-manual",
+          "name": "运维手册",
+          "completed": true,
+          "path": "docs/02-项目/运维手册.md"
+        },
+        {
+          "id": "d3-training-plan",
+          "name": "培训计划",
+          "completed": true,
+          "path": "docs/02-项目/培训计划.md"
+        },
+        {
+          "id": "d3-prod-config",
+          "name": "docker-compose.prod.yml",
+          "completed": true,
+          "path": "docker-compose.prod.yml"
+        }
       ],
       "gateChecks": [
-        { "id": "g3-1", "description": "UAT 验收通过", "passed": true, "standard": "核心流程业务方确认" },
-        { "id": "g3-2", "description": "回滚方案已演练验证", "passed": true, "standard": "回滚耗时 6 秒" },
-        { "id": "g3-3", "description": "生产环境健康检查通过", "passed": true, "standard": "HTTP 200 + pg_isready + 容器正常" },
-        { "id": "g3-4", "description": "用户培训完成", "passed": true, "standard": "操作手册 + 运维手册已交付" }
+        {
+          "id": "g3-1",
+          "description": "UAT 验收通过",
+          "passed": true,
+          "standard": "核心流程业务方确认"
+        },
+        {
+          "id": "g3-2",
+          "description": "回滚方案已演练验证",
+          "passed": true,
+          "standard": "回滚耗时 6 秒"
+        },
+        {
+          "id": "g3-3",
+          "description": "生产环境健康检查通过",
+          "passed": true,
+          "standard": "HTTP 200 + pg_isready + 容器正常"
+        },
+        {
+          "id": "g3-4",
+          "description": "用户培训完成",
+          "passed": true,
+          "standard": "操作手册 + 运维手册已交付"
+        }
       ]
     }
   ]
