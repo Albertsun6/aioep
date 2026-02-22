@@ -24,6 +24,7 @@ import {
     UnorderedListOutlined,
 } from "@ant-design/icons";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -37,6 +38,7 @@ interface FileNode {
 
 interface PlatformTree {
     docs: FileNode[];
+    methods: FileNode[];
     workflows: FileNode[];
     rules: FileNode[];
 }
@@ -59,8 +61,9 @@ function toAntdTree(nodes: FileNode[], prefix: string): DataNode[] {
 
 // Labels for the three sections
 const SECTION_LABELS: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
-    docs: { label: "方法论 & 文档", icon: <BookOutlined />, color: "#2563eb" },
-    workflows: { label: "Workflows (Skills)", icon: <ThunderboltOutlined />, color: "#7c3aed" },
+    docs: { label: "方法论", icon: <BookOutlined />, color: "#2563eb" },
+    methods: { label: "方法库", icon: <BookOutlined />, color: "#0891b2" },
+    workflows: { label: "Workflows", icon: <ThunderboltOutlined />, color: "#7c3aed" },
     rules: { label: "Rules", icon: <UnorderedListOutlined />, color: "#059669" },
 };
 
@@ -154,7 +157,7 @@ export default function PlatformPage({
                         <Card
                             size="small"
                             style={{ height: "100%" }}
-                            bodyStyle={{ padding: 0 }}
+                            styles={{ body: { padding: 0 } }}
                         >
                             <Tabs
                                 activeKey={activeSection}
@@ -219,7 +222,7 @@ export default function PlatformPage({
                                     className="markdown-body"
                                     style={{ overflowY: "auto", maxHeight: "72vh" }}
                                 >
-                                    <ReactMarkdown>{fileContent}</ReactMarkdown>
+                                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{fileContent}</ReactMarkdown>
                                 </div>
                             ) : (
                                 <Empty description="请从左侧选择 .md 文件" style={{ marginTop: 80 }} />

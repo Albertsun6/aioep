@@ -57,7 +57,8 @@ export async function GET(req: Request) {
 
     if (section === "platform") {
         const tree: Record<string, FileNode[]> = {
-            docs: readDir(path.join(PLATFORM_ROOT, "docs"), "docs"),
+            docs: readDir(path.join(PLATFORM_ROOT, "docs", "00-方法论"), "docs/00-方法论"),
+            methods: readDir(path.join(PLATFORM_ROOT, "docs", "01-方法"), "docs/01-方法"),
             workflows: readDir(path.join(PLATFORM_ROOT, "workflows"), "workflows"),
             rules: readDir(path.join(PLATFORM_ROOT, "rules"), "rules"),
         };
